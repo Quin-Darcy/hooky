@@ -14,6 +14,8 @@ To generate a DLL, run the following command:
 hooky.exe [OPTIONS] --module_name <MODULE_NAME> --function_name <FUNCTION_NAME> --num_stolen_bytes <NUM_STOLEN_BYTES> --cleanup_file_path <CLEANUP_FILE_PATH> --dll_name <DLL_NAME>
 ```
 
+After the DLL has been generated, you will find it along with the associated Cargo.toml file in the `generated_dlls/` folder under the folder name you specified in the `dll_name` argument. Navigate to the `src` folder and open `lib.rs` in your editor of choice. From here, all you need to do is finish writing the hook function, i.e., complete function signature and hooking logic. Finally, just compile and you should have a nice DLL ready to be injected and hook your target function. 
+
 ### Options:
 
 - `-m, --module_name <MODULE_NAME>`  
@@ -73,6 +75,9 @@ hooky.exe [OPTIONS] --module_name <MODULE_NAME> --function_name <FUNCTION_NAME> 
 - **Num Stolen Bytes**: This argument specifies the number of bytes to "steal" from the beginning of the target function. It should be at least as big as the number of bytes required for a 32-bit or 64-bit JMP instruction, which are 5 and 14 bytes, respectively. To avoid breaking any instructions, you can use a disassembler like xdbg to count the bytes of machine code in the target function.
   
 - **Compiler Target Conditionals**: The generated `lib.rs` file contains conditionals based on whether the compiler target is 32-bit or 64-bit, affecting the trampoline function and JMP statement constructions.
+
+## Shameless Recommendation 
+After you have completed the hook function and compiled your DLL, you can inject it using this awesome [injector](https://github.com/Quin-Darcy/injector)! With this you get a very stable injector that includes extensive logging similar to that found in the DLL itself so you can maintain complete visibility over the entire process.  
 
 ## TODO
 
